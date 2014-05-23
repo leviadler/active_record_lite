@@ -10,23 +10,41 @@ class AssocOptions
   )
 
   def model_class
-    # ...
+    class_name.constantize
   end
 
   def table_name
-    # ...
+    model_class.table_name
   end
 end
 
 class BelongsToOptions < AssocOptions
+
   def initialize(name, options = {})
-    # ...
+    default_fk = (name + "_id").to_sym
+    default_cn = name.to_s.camelcase
+    defaults = {foreign_key: default_fk,
+                primary_key: :id,
+                class_name: default_cn}
+
+    defaults.merge(options).each do |key, value|
+      self.send("#{key}=", value)
+    end
+
   end
 end
 
 class HasManyOptions < AssocOptions
   def initialize(name, self_class_name, options = {})
-    # ...
+    default_fk = (self_class_name.downcase.underscore + "_id").to_sym
+    default_cn = name.singularize.camelcase
+    defaults = {foreign_key: default_fk,
+                primary_key: :id,
+                class_name: default_cn}
+
+    defaults.merge(options).each do |key, value|
+      self.send("#{key}=", value)
+    end
   end
 end
 
