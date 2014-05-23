@@ -10,6 +10,9 @@ module Associatable
     define_method(name) do
       source_options = through_options.model_class.assoc_options[source_name]
 
+      through_table = through_options.table_name
+      source_table = source_options.table_name
+
       through_foreign_key = self.send(through_options.foreign_key)
 
       source_primary_key = source_options.model_class
@@ -18,15 +21,15 @@ module Associatable
 
       result = DBConnection.execute(<<-SQL, through_foreign_key)
         SELECT
-        #{source_options.table_name}.*
+        #{source_table}.*
         FROM
-        #{through_options.table_name}
+        #{through_table}
         JOIN
-        #{source_options.table_name}
+        #{source_table}
         ON
-        #{through_options.table_name}.#{source_options.foreign_key} = #{source_options.table_name}.#{source_options.primary_key}
+        #{through_table}.#{source_options.foreign_key} = #{source_table}.#{source_options.primary_key}
         WHERE
-        #{through_options.table_name}.#{source_options.primary_key}= ?
+        #{through_table}.#{source_options.primary_key}= ?
         SQL
 
       source_options.model_class.new(result.first)
