@@ -29,7 +29,7 @@ module Associatable
         ON
         #{through_table}.#{source_options.foreign_key} = #{source_table}.#{source_options.primary_key}
         WHERE
-        #{through_table}.#{source_options.primary_key}= ?
+        #{through_table}.#{through_options.primary_key}= ?
         SQL
 
       source_options.model_class.new(result.first)
