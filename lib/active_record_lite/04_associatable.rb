@@ -30,7 +30,6 @@ class BelongsToOptions < AssocOptions
     defaults.merge(options).each do |key, value|
       self.send("#{key}=", value)
     end
-
   end
 end
 
