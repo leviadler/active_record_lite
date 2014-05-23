@@ -51,6 +51,7 @@ module Associatable
   # Phase IVb
   def belongs_to(name, options = {})
     options = BelongsToOptions.new(name, options)
+    assoc_options[name] = options
 
     define_method(name) do
       foreign_key = self.send(options.foreign_key)
@@ -70,10 +71,10 @@ module Associatable
 
   def assoc_options
     # Wait to implement this in Phase V. Modify `belongs_to`, too.
+    @assoc_params ||= Hash.new
   end
 end
 
 class SQLObject
-  # Mixin Associatable here...
   extend Associatable
 end
