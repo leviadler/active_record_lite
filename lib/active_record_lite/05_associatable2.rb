@@ -16,7 +16,7 @@ module Associatable
                         .find(through_foreign_key)
                         .send(source_options.primary_key)
 
-      result = DBConnection.execute(<<-SQL)
+      result = DBConnection.execute(<<-SQL, through_foreign_key)
         SELECT
         #{source_options.table_name}.*
         FROM
@@ -24,9 +24,9 @@ module Associatable
         JOIN
         #{source_options.table_name}
         ON
-        #{through_foreign_key} = #{source_primary_key}
+        #{through_options.table_name}.#{source_options.foreign_key} = #{source_options.table_name}.#{source_options.primary_key}
         WHERE
-        #{source_options.table_name}.id= #{through_foreign_key}
+        #{through_options.table_name}.#{source_options.primary_key}= ?
         SQL
 
       source_options.model_class.new(result.first)
