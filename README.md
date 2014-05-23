@@ -1,3 +1,3 @@
-ActiveRocordLite
+ActiveRecordLite
 
 w3d5
