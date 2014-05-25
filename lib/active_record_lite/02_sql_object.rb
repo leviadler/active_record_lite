@@ -101,9 +101,9 @@ class SQLObject < MassObject
   end
 
   def update
-    columns = self.class.columns# - ["id"]
+    columns = self.class.columns # - ["id"]
     set_vals = columns.join(' = ?, ') + " = ?"
-    values = attribute_values#[1..-1] #to remove id
+    values = attribute_values #[1..-1] #to remove id
 
     DBConnection.execute(<<-SQL, *values, self.id)
       UPDATE
