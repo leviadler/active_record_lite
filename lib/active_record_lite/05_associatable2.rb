@@ -15,10 +15,6 @@ module Associatable
 
       through_foreign_key = self.send(through_options.foreign_key)
 
-      source_primary_key = source_options.model_class
-                        .find(through_foreign_key)
-                        .send(source_options.primary_key)
-
       result = DBConnection.execute(<<-SQL, through_foreign_key)
         SELECT
         #{source_table}.*
