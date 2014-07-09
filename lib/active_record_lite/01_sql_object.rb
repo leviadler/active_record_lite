@@ -1,5 +1,4 @@
 require_relative 'db_connection'
-require_relative '01_mass_object'
 require 'active_support/inflector'
 
 class MassObject
