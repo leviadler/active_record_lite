@@ -10,7 +10,6 @@ ActiceRecordLite is a lite (duh!) version of Rail's ActiveRecord. Not nearly as 
 * has_many
 * has_many_through
 * #insert
-* #initialize (creates an ActiveRecord object from the given parameters)
 * #save
 * #update
 * ::where
